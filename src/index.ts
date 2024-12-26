@@ -3,6 +3,7 @@ import OpenAI from 'openai'
 
 const apiKey = ""
 const imgPath = ""
+const descriptionSizeLimit = 200
 
 const client = new OpenAI({ apiKey })
 const getImageReply = async (imageUrl: string, prompt: string, optionalParams?: {
@@ -48,7 +49,14 @@ const getImageReply = async (imageUrl: string, prompt: string, optionalParams?: 
 
     const response = await getImageReply(base64Url, 
         `Please describe the image in a meme-like style, funny and weird (the weirder the better).
-        Suggest also a title for it, like this is a memecoin logo.`
+        Make it short (<= ${descriptionSizeLimit} chars) and punchy.
+        Suggest also a title for it, like this is a memecoin logo.
+        Reply with only JSON like this, ready to be parsed (don't make it readable):
+
+        {
+            "title": "...",
+            "description": "..."
+        }`
         .replace(/\s+/g, ' '), // remove extra whitespace
     )
 
