@@ -1,0 +1,13 @@
+{
+  "main": "src/index.ts",
+  "scripts": {
+    "try": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "openai": "^4.77.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
