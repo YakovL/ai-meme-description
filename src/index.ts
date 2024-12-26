@@ -4,6 +4,7 @@ import OpenAI from 'openai'
 const apiKey = ""
 const imgPath = ""
 const descriptionSizeLimit = 200
+const tickerSizeLimit = 6
 
 const client = new OpenAI({ apiKey })
 const getImageReply = async (imageUrl: string, prompt: string, optionalParams?: {
@@ -47,14 +48,17 @@ const getImageReply = async (imageUrl: string, prompt: string, optionalParams?: 
     const mimeType = 'image/jpeg'
     const base64Url = `data:${mimeType};base64,${base64String}`
 
+    // ⚠️ sometimes returns null, haven't figured out why, yet
     const response = await getImageReply(base64Url, 
         `Please describe the image in a meme-like style, funny and weird (the weirder the better).
         Make it short (<= ${descriptionSizeLimit} chars) and punchy.
         Suggest also a title for it, like this is a memecoin logo.
+        Finally, suggest a ticker (<= ${tickerSizeLimit} chars).
         Reply with only JSON like this, ready to be parsed (don't make it readable):
 
         {
             "title": "...",
+            "ticker": "...",
             "description": "..."
         }`
         .replace(/\s+/g, ' '), // remove extra whitespace
